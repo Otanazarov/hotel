@@ -18,7 +18,7 @@ model Admin {
 
 model Category {
   id        Int      @id @default(autoincrement())
-  name      String
+  name      String   @unique
   rooms     Room[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
