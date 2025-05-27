@@ -28,9 +28,10 @@ model Room {
   id          Int      @id @default(autoincrement())
   title       String
   description String
-  price       Float
+  price       String
   categoryId  Int
-  category    Category @relation(fields: [categoryId], references: [id])
+  amenities   String[]
+  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   images      Image[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -40,5 +41,5 @@ model Image {
   id     Int    @id @default(autoincrement())
   url    String
   roomId Int
-  room   Room   @relation(fields: [roomId], references: [id])
+  room   Room   @relation(fields: [roomId], references: [id], onDelete: Cascade)
 }

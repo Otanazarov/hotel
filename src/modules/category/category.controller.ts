@@ -13,7 +13,7 @@ import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { FindAllCategoryQueryDto } from './dto/findAll-category.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { DecoratorWrapper } from 'src/common/auth/decorator.auth';
 import { Role } from 'src/common/auth/roles/role.enum';
 @ApiTags('Category')
@@ -50,6 +50,9 @@ export class CategoryController {
 
   @Delete(':id')
   @DecoratorWrapper('Delete Category', true, [Role.Admin])
+  @ApiOperation({
+    description: '🛑 Ogohlantirish: Ushbu kategoriya o‘chirilganda, unga biriktirilgan barcha xonalar (rooms) ham avtomatik ravishda o‘chiriladi.',
+  })
   remove(@Param('id',ParseIntPipe) id: string) {
     return this.categoryService.remove(+id);
   }
