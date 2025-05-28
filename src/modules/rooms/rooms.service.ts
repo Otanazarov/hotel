@@ -86,6 +86,7 @@ export class RoomsService {
           orderBy: { createdAt: 'desc' },
           include: {
             images: true,
+            category: true, // Agar kategoriya ma'lumotlarini ham olish kerak bo'lsa
           },
         }),
         this.prisma.room.count({
@@ -110,6 +111,10 @@ export class RoomsService {
   async findOne(id: number) {
     const room = await this.prisma.room.findUnique({
       where: { id },
+      include: {
+        images: true, // Agar rasm ma'lumotlarini ham olish kerak bo'lsa
+        category: true, // Agar kategoriya ma'lumotlarini ham olish kerak bo'lsa
+      },
     });
     if (!room) {
       throw HttpError({ code: 'Room not found' });
