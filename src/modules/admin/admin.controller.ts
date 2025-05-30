@@ -23,11 +23,11 @@ import { UpdateAdminDto } from './dto/update-admin.dto';
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
-  @Post('register')
-  @DecoratorWrapper('Register Admin')
-  create(@Body() createAdminDto: CreateAdminDto) {
-    return this.adminService.create(createAdminDto);
-  }
+  // @Post('register')
+  // @DecoratorWrapper('Register Admin')
+  // create(@Body() createAdminDto: CreateAdminDto) {
+  //   return this.adminService.create(createAdminDto);
+  // }
 
   @Post('login')
   @DecoratorWrapper('Admin Login')

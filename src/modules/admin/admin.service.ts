@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
 import * as bcrypt from 'bcryptjs';
 import { PrismaService } from '../prisma/prisma.service';
 import { HttpError } from 'src/common/exception/http.error';
@@ -20,23 +20,34 @@ import { UpdateAdminDto } from './dto/update-admin.dto';
 import { Role } from 'src/common/auth/roles/role.enum';
 
 @Injectable()
-export class AdminService {
+export class AdminService implements OnApplicationBootstrap {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(createAdminDto: CreateAdminDto) {
-    const existingAdmin = await this.prisma.admin.findFirst({
-      where: { name: createAdminDto.name },
-    });
-    if (existingAdmin) {
-      throw HttpError({ code: 'Admin with this name already exists' });
+  async onApplicationBootstrap() {
+    const admin = await this.prisma.admin.count();
+    if (admin == 0) {
+      const defaultAdmin = {
+        name: 'admin',
+        password: await bcrypt.hash('admin', 10),
+      };
+      await this.prisma.admin.create({ data: defaultAdmin });
     }
-    const hashedPassword = await bcrypt.hash(createAdminDto.password, 10);
-    createAdminDto.password = hashedPassword;
-
-    const admin = await this.prisma.admin.create({ data: createAdminDto });
-    delete admin.password;
-    return admin;
   }
+
+  // async create(createAdminDto: CreateAdminDto) {
+  //   const existingAdmin = await this.prisma.admin.findFirst({
+  //     where: { name: createAdminDto.name },
+  //   });
+  //   if (existingAdmin) {
+  //     throw HttpError({ code: 'Admin with this name already exists' });
+  //   }
+  //   const hashedPassword = await bcrypt.hash(createAdminDto.password, 10);
+  //   createAdminDto.password = hashedPassword;
+
+  //   const admin = await this.prisma.admin.create({ data: createAdminDto });
+  //   delete admin.password;
+  //   return admin;
+  // }
 
   async login(dto: LoginAdminDto) {
     const { name, password } = dto;
@@ -61,7 +72,7 @@ export class AdminService {
         { id: admin.id, role: Role.Admin, tokenVersion },
         env.ACCESS_TOKEN_SECRET,
         {
-          expiresIn: '2h',
+          expiresIn: '5s',
         },
       ),
       sign(
