@@ -72,7 +72,7 @@ export class AdminService implements OnApplicationBootstrap {
         { id: admin.id, role: Role.Admin, tokenVersion },
         env.ACCESS_TOKEN_SECRET,
         {
-          expiresIn: '5s',
+          expiresIn: '2h',
         },
       ),
       sign(
