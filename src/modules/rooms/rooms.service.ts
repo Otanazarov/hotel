@@ -77,7 +77,6 @@ export class RoomsService {
           where: {
             title: {
               contains: title?.trim() || '',
-              mode: 'insensitive',
             },
             categoryId: categoryId ? Number(categoryId) : undefined,
           },
@@ -93,7 +92,6 @@ export class RoomsService {
           where: {
             title: {
               contains: title?.trim() || '',
-              mode: 'insensitive',
             },
             categoryId: categoryId ? Number(categoryId) : undefined,
           },

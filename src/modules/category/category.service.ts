@@ -31,7 +31,6 @@ export class CategoryService {
         where: {
           name: {
             contains: name?.trim() || '',
-            mode: 'insensitive',
           },
         },
         skip: (page - 1) * limit,
@@ -48,7 +47,6 @@ export class CategoryService {
         where: {
           name: {
             contains: name?.trim() || '',
-            mode: 'insensitive',
           },
         },
       }),
