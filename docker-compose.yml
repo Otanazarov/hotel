@@ -1,0 +1,15 @@
+services:
+
+  backend:
+    build:
+      context: .
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - DATABASE_URL=mysql://otabek6a_hotel:otabek77_@localhost/otabek6a_hotel  # Updated DATABASE_URL
+    volumes:
+      - uploads_data:/app/uploads  # 🆕 uploads volume
+
+volumes:
+  uploads_data:  # 🆕 uploads volume
