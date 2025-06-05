@@ -1,6 +1,12 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
-import { IsArray, IsInt, IsOptional, IsString } from 'class-validator';
+import { Transform, Type } from 'class-transformer';
+import {
+  IsArray,
+  IsInt,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class UpdateRoomDto {
   @ApiPropertyOptional()
@@ -32,7 +38,13 @@ export class UpdateRoomDto {
 
   @ApiPropertyOptional({ example: ['WiFi', 'Pool'] })
   @IsOptional()
-  @IsArray()
   @IsString({ each: true })
+  @IsNotEmpty({ each: true })
+  @Transform((value) => {
+    if (typeof value.value === 'string') {
+      return JSON.parse(value.value);
+    }
+    return value.value;
+  })
   amenities?: string[];
 }
