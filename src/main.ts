@@ -38,6 +38,6 @@ async function bootstrap() {
       customCssUrl: './public/swagger.css',
     });
   }
-  await app.listen(env.PORT || 3000, '127.0.0.1');
+  await app.listen(env.PORT || 3000);
 }
 bootstrap();

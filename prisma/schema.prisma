@@ -1,5 +1,5 @@
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -30,7 +30,7 @@ model Room {
   description String
   price       String
   categoryId  Int
-  amenities   Json?
+  amenities   String[]
   category    Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   images      Image[]
   createdAt   DateTime  @default(now())
