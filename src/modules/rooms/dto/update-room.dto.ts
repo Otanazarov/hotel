@@ -38,8 +38,6 @@ export class UpdateRoomDto {
 
   @ApiPropertyOptional({ example: ['WiFi', 'Pool'] })
   @IsOptional()
-  @IsString({ each: true })
-  @IsNotEmpty({ each: true })
   @Transform((value) => {
     if (typeof value.value === 'string') {
       return JSON.parse(value.value);
