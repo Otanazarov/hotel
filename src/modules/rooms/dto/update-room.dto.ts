@@ -32,6 +32,7 @@ export class UpdateRoomDto {
 
   @ApiPropertyOptional({ example: [1, 2] })
   @IsOptional()
+  @Transform(({ value }) => JSON.parse(value))
   @IsArray()
   @IsInt({ each: true })
   deleteImages?: number[];
