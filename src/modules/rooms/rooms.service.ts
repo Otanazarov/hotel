@@ -65,7 +65,6 @@ export class RoomsService {
         images: true,
       },
     });
-    delete room.images; // Agar rasm ma'lumotlarini qaytarishni xohlamasak
     return room;
   }
 
